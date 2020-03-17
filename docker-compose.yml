@@ -2,12 +2,13 @@ version: '2'
 services:
   runner:
     image: 'gitlab/gitlab-runner:v12.8.0'
+    container_name: runner
     volumes:
-      - './runner-config.toml:/etc/gitlab-runner/config.toml'
       - 'moodle_data:/bitnami'
     restart: always
   moodle:
     image: 'bitnami/moodle:3'
+    container_name: moodle
     env_file: moodle.env
     volumes:
       - 'moodle_data:/bitnami'

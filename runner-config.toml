@@ -1,6 +1,0 @@
-# En este archivo debe ir la configuración de sincronización
-concurrent = 1
-check_interval = 0
-
-[session_server]
-  session_timeout = 1800
