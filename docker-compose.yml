@@ -9,7 +9,13 @@ services:
   moodle:
     image: 'bitnami/moodle:3'
     container_name: moodle
-    env_file: moodle.env
+    environment:
+      - MARIADB_HOST=$MARIADB_HOST
+      - MARIADB_PORT_NUMBER=$MARIADB_PORT_NUMBER
+      - MOODLE_DATABASE_USER=$MOODLE_DATABASE_USER
+      - MOODLE_DATABASE_NAME=$MOODLE_DATABASE_NAME
+      - MOODLE_DATABASE_PASSWORD=$MOODLE_DATABASE_PASSWORD
+      - MOODLE_SKIP_INSTALL=$MOODLE_SKIP_INSTALL
     volumes:
       - 'moodle_data:/bitnami'
     ports:
