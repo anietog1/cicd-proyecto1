@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 if ! [ `whoami` = root ]; then
   sudo bash $0
@@ -30,11 +30,11 @@ systemctl enable docker.service
 #
 
 # cloning repository
-DEPLOY_USERNAME=gitlab+deploy-token-1
-DEPLOY_TOKEN=XtrhJysChissyf1pvqzw
-GIT_PROVIDER=gitlab.com
-GIT_USERNAME=anietog1
-GIT_REPOSITORY=moodle_data
+DEPLOY_USERNAME=
+DEPLOY_TOKEN=
+GIT_PROVIDER=
+GIT_USERNAME=
+GIT_REPOSITORY=
 git clone https://$DEPLOY_USERNAME:$DEPLOY_TOKEN@$GIT_PROVIDER/$GIT_USERNAME/$GIT_REPOSITORY.git
 
 # setting up daemon
@@ -61,19 +61,18 @@ systemctl enable gitpull.service
 # setup docker image
 #
 
-MARIADB_HOST=laeafidatabase.cgbyfl68k5jy.us-east-1.rds.amazonaws.com
-MARIADB_PORT_NUMBER=3306
-MOODLE_DATABASE_USER=admin
-MOODLE_DATABASE_NAME=laeafidb
-MOODLE_DATABASE_PASSWORD=laeafi2019*
-MOODLE_SKIP_INSTALL=yes
+MARIADB_HOST=
+MARIADB_PORT_NUMBER=
+MOODLE_DATABASE_USER=
+MOODLE_DATABASE_NAME=
+MOODLE_DATABASE_PASSWORD=
+MOODLE_SKIP_INSTALL=
 
 cat << EOF > docker-compose.yml
 version: '2'
 services:
   moodle:
     image: 'bitnami/moodle:3'
-    container_name: moodle
     environment:
       - MARIADB_HOST=$MARIADB_HOST
       - MARIADB_PORT_NUMBER=$MARIADB_PORT_NUMBER
