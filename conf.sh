@@ -40,12 +40,12 @@ git clone https://$DEPLOY_USERNAME:$DEPLOY_TOKEN@$GIT_PROVIDER/$GIT_USERNAME/$GI
 # setting up daemon
 cat << EOF > /etc/systemd/system/gitpull.service
 [Unit]
-Description=git pull $GIT_REPOSITORY forever
+Description=sync $GIT_REPOSITORY forever
 
 [Service]
 User=$USER
 WorkingDirectory=$HOME/$GIT_REPOSITORY
-ExecStart=/bin/git pull
+ExecStart=/bin/bash -c 'git fetch origin master; git reset --hard FETCH_HEAD; git clean -df'
 Restart=always
 RestartSec=300s
 
