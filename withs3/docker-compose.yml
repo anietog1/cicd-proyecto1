@@ -1,0 +1,18 @@
+version: '2'
+services:
+  moodle:
+    image: 'bitnami/moodle:3'
+    environment:
+      - MARIADB_HOST=$MARIADB_HOST
+      - MARIADB_PORT_NUMBER=$MARIADB_PORT_NUMBER
+      - MOODLE_DATABASE_USER=$MOODLE_DATABASE_USER
+      - MOODLE_DATABASE_NAME=$MOODLE_DATABASE_NAME
+      - MOODLE_DATABASE_PASSWORD=$MOODLE_DATABASE_PASSWORD
+      - MOODLE_SKIP_INSTALL=$MOODLE_SKIP_INSTALL
+    volumes:
+      - './$GIT_REPOSITORY:/bitnami'
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    
