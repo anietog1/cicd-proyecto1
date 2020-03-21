@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#! /bin/bash
 
 if ! [ `whoami` = root ]; then
   sudo bash $0
@@ -9,6 +9,7 @@ fi
 # setup environment
 #
 
+HOME=/root
 cd $HOME
 
 # update and install
@@ -47,7 +48,7 @@ cat << EOF > docker-compose.yml
 version: '2'
 services:
   moodle:
-    image: 'bitnami/moodle:3'
+    image: bitnami/moodle:3
     container_name: moodle
     environment:
       - MARIADB_HOST=$MARIADB_HOST
@@ -57,10 +58,10 @@ services:
       - MOODLE_DATABASE_PASSWORD=$MOODLE_DATABASE_PASSWORD
       - MOODLE_SKIP_INSTALL=$MOODLE_SKIP_INSTALL
     volumes:
-      - 'moodle_data:/bitnami'
+      - moodle_data:/bitnami
     ports:
-      - '80:80'
-      - '443:443'
+      - 80:80
+      - 443:443
     depends_on:
       - s3vol
     restart: always
@@ -71,9 +72,11 @@ services:
       - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       - AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
+      - BACKUP_INTERVAL=3m
     command: /data s3://$BUCKET_NAME/$MOODLE_DATA_PATH
     volumes:
-      - 'moodle_data:/data'
+      - moodle_data:/data
+    restart: always
 volumes:
   moodle_data:
     driver: local
